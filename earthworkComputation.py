@@ -21,6 +21,9 @@ def coodinateBase(wA):
     for i in range(len(wA)):
         pointTemp = pointList.append(Point(wA[i][0],wA[i][1],wA[i][2]))
 
+def getLine():
+    if pointList[i].
+
 goalHeight = int(input('目標高度 : '))
 print('\n建立座標點物件')
 
