@@ -1,11 +1,11 @@
 class Point:
     def __init__(self,x,y,rH):
-        #rH = realHeight,gH = goalHeight,dH = differenceHeight
+        #rH = realHeight,gH = goalHeight,nH = needingHeight
         self.x = x
         self.y = y
         self.rH = rH
         self.gH = goalHeight
-        self.dH = rH-goalHeight
+        self.nH = rH-goalHeight
 
 class Line:
     def __init__(self,pointA,pointB):
