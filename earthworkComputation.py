@@ -5,7 +5,7 @@ class Point:
         self.y = y
         self.rH = rH
         self.gH = goalHeight
-        self.nH = rH-goalHeight
+        self.nH = self.rH-goalHeight
 
 class Line:
     def __init__(self,pointA,pointB):
