@@ -27,8 +27,7 @@ def coordinateBase(wA):#將座標資料設為點物件Point並存入串列pointL
     for i in range(len(wA)):
         pointTemp = pointList.append(Point(wA[i][0],wA[i][1],wA[i][2]))
 
-def getLine(pointList):
-    i=4
+def findPartnerPoint(i, pointList):
     selfPoint = pointList[i]
     getRightPoint = 0
     getUpPoint = 0
@@ -41,6 +40,9 @@ def getLine(pointList):
                 rightSidePoint = pointList[j]
                 getRightPoint = 1
                 break
+            elif dx > (max([pointList[k].x for k in range(len(pointList))])-min([pointList[k].x for k in range(len(pointList))])):
+                rightSidePoint = None
+                getRightPoint = 1
             else:
                 pass
         dx = dx + 1
@@ -51,6 +53,9 @@ def getLine(pointList):
                 upSidePoint = pointList[j]
                 getUpPoint = 1
                 break
+            elif dy > (max([pointList[k].y for k in range(len(pointList))])-min([pointList[k].y for k in range(len(pointList))])):
+                upSidePoint = None
+                getUpPoint = 1
             else:
                 pass
         dy = dy + 1
@@ -62,3 +67,6 @@ print('\n建立座標點物件')
 wholeArea = [(0,0,111),(1100,0,100.5),(0,650,105),(1100,650,30.5),(600,275,98),(1100,275,80),(600,650,91),(950,275,80),(950,650,47),(600,0,101)]
 pointList=[]
 coordinateBase(wholeArea)
+partnerPoint={}
+for i in range(len(pointList)):
+    partnerPoint[i] = findPartnerPoint(i,pointList)
