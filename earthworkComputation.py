@@ -31,6 +31,7 @@ def findPartnerPoint(i, pointList):
     selfPoint = pointList[i]
     getRightPoint = 0
     getUpPoint = 0
+    getDiagonalPoint = 0
     dx = 1
     dy = 1
     j = 0
@@ -59,7 +60,48 @@ def findPartnerPoint(i, pointList):
             else:
                 pass
         dy = dy + 1
-    return rightSidePoint,upSidePoint
+    j = 0
+    #if point is None, first solution
+    '''while getDiagonalPoint == 0:
+        for j in range(len(pointList)):
+            if rightSidePoint == None or upSidePoint == None:
+                diagonalPoint = None
+                getDiagonalPoint = 1
+            elif pointList[j].x == rightSidePoint.x and pointList[j].y == upSidePoint.y:
+                diagonalPoint = pointList[j]
+                getDiagonalPoint = 1
+            else:
+                pass'''
+    #second solution
+    '''while getDiagonalPoint == 0:
+
+        try:
+            for j in range(len(pointList)):
+                if pointList[j].x == rightSidePoint.x and pointList[j].y == upSidePoint.y:
+                    diagonalPoint = pointList[j]
+                else:
+                    pass
+        except AttributeError as error:
+                diagonalPoint = None
+        else:
+            pass
+        finally:
+            getDiagonalPoint = 1'''
+    #third solution
+    try:
+        for j in range(len(pointList)):
+            if pointList[j].x == rightSidePoint.x and pointList[j].y == upSidePoint.y:
+                diagonalPoint = pointList[j]
+            else:
+                pass
+    except AttributeError as error:
+        diagonalPoint = None
+    else:
+        pass
+    finally:
+        pass
+    
+    return rightSidePoint,upSidePoint,diagonalPoint
 
 goalHeight = int(input('目標高度 : '))
 print('\n建立座標點物件')
