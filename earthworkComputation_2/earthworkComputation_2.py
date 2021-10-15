@@ -6,7 +6,6 @@ class Point:#座標點物件
         self.rH = rH
         self.gH = goalHeight
         self.nH = self.rH-goalHeight
-        self.area = None
 
 class Line:
     def __init__(self,pointA,pointB):
@@ -22,8 +21,22 @@ class Line:
 
 class Area:#每塊矩形設為一個面積物件，以左下點為面積物件位置座標點，
     def __init__(self,pointA,i):
-        self.areaLocation = (pointA.x,pointA.y)
-        self.area = (partnerPoint[i][0].x - pointList[i].x) * (partnerPoint[i][1].y - pointList[i].y)
+        self.Location = (pointA.x,pointA.y)
+        try:
+            self.area = (partnerPoint[i][0].x - pointList[i].x) * (partnerPoint[i][1].y - pointList[i].y)
+        except Exception:
+            self.area = 0
+        else:
+            pass
+        finally:
+            #print("第 %d 點: "%i,end=' ')
+            #print(self.Location,end=' ')
+            #print('area is %d'%self.area)
+            pass
+        if self.area > 0:
+            self.volume = self.area * (pointList[i].nH + partnerPoint[i][0].nH + partnerPoint[i][1].nH + partnerPoint[i][2].nH)/4
+        else:
+            self.volume = 0
 
 def coordinateBase(wA):#將座標資料設為點物件Point並存入串列pointList
     for i in range(len(wA)):
@@ -102,15 +115,41 @@ def findPartnerPoint(i, pointList):#找到相鄰三點，右點、上點、右�
         pass
     finally:
         pass
-    
     return rightSidePoint,upSidePoint,diagonalPoint
+
+def findGoalHeightPoint():
+    goalHeightPoint=[]
+    for i in range(len(pointList)):
+        try:
+            if pointList[i].nH * partnerPoint[i][0].nH <= 0:
+                goalHeightPoint.append(Point(pointList[i].x+int((partnerPoint[i][0].x-pointList[i].x)*abs(pointList[i].nH)/(abs(pointList[i].nH)+abs(partnerPoint[i][0].nH))),pointList[i].y,goalHeight))
+            else:
+                pass
+            if pointList[i].nH * partnerPoint[i][1].nH <= 0:
+                goalHeightPoint.append(Point(pointList[i].x,pointList[i].y+int((partnerPoint[i][1].y-pointList[i].y)*abs(pointList[i].nH)/(abs(pointList[i].nH)+abs(partnerPoint[i][1].nH))),goalHeight))
+            else:
+                pass
+            if partnerPoint[i][0].nH * partnerPoint[i][2].nH <= 0:
+                goalHeightPoint.append(Point(partnerPoint[i][0].x,partnerPoint[i][0].y+int((partnerPoint[i][2].y-partnerPoint[i][0].y)*abs(partnerPoint[i][0].nH)/(abs(partnerPoint[i][0].nH)+abs(partnerPoint[i][2].nH))),goalHeight))
+            else:
+                pass
+            if partnerPoint[i][1].nH * partnerPoint[i][2].nH <= 0:
+                goalHeightPoint.append(Point(partnerPoint[i][1].x+int((partnerPoint[i][2].x-partnerPoint[i][1].x)*abs(partnerPoint[i][1].nH)/(abs(partnerPoint[i][1].nH)+abs(partnerPoint[i][2].nH))),partnerPoint[i][1].y,goalHeight))
+            else:
+                pass
+        except:
+            pass
+    return goalHeightPoint
 ###
 goalHeight = int(input('目標高度 : '))
-print('\n建立座標點物件')
 
+print('\n輸入座標點及高程')
 wholeArea = [(0,0,111),(1100,0,100.5),(0,650,105),(1100,650,30.5),(600,275,98),(1100,275,80),(600,650,91),(950,275,80),(950,650,47),(600,0,101)]
+
 pointList=[]
 coordinateBase(wholeArea)
+pointList = tuple(pointList)#存好點物件後先將pointList改成tuple以免後續動到
+
 partnerPoint={}
 for i in range(len(pointList)):
     partnerPoint[i] = findPartnerPoint(i,pointList)
