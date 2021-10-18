@@ -50,18 +50,20 @@ def findPartnerPoint(i, pointList):#找到相鄰三點，右點、上點、右�
     dx = 1
     dy = 1
     j = 0
-    while getRightPoint == 0:
+    while dx <= (max([pointList[k].x for k in range(len(pointList))])-min([pointList[k].x for k in range(len(pointList))])):
         for j in range(len(pointList)):
             if pointList[i].x + dx == pointList[j].x and pointList[i].y == pointList[j].y:
                 rightSidePoint = pointList[j]
                 getRightPoint = 1
                 break
-            elif dx > (max([pointList[k].x for k in range(len(pointList))])-min([pointList[k].x for k in range(len(pointList))])):
-                rightSidePoint = None
-                getRightPoint = 1
             else:
+                rightSidePoint = None
                 pass
         dx = dx + 1
+        if rightSidePoint != None :
+            break
+        else:
+            pass
     j = 0
     while getUpPoint == 0:
         for j in range(len(pointList)):
@@ -123,25 +125,29 @@ def findGoalHeightPoint():
         try:
             if pointList[i].nH * partnerPoint[i][0].nH <= 0:
                 goalHeightPoint.append(Point(pointList[i].x+int((partnerPoint[i][0].x-pointList[i].x)*abs(pointList[i].nH)/(abs(pointList[i].nH)+abs(partnerPoint[i][0].nH))),pointList[i].y,goalHeight))
+                print(i,1)
             else:
                 pass
             if pointList[i].nH * partnerPoint[i][1].nH <= 0:
                 goalHeightPoint.append(Point(pointList[i].x,pointList[i].y+int((partnerPoint[i][1].y-pointList[i].y)*abs(pointList[i].nH)/(abs(pointList[i].nH)+abs(partnerPoint[i][1].nH))),goalHeight))
+                print(i,2)
             else:
                 pass
             if partnerPoint[i][0].nH * partnerPoint[i][2].nH <= 0:
                 goalHeightPoint.append(Point(partnerPoint[i][0].x,partnerPoint[i][0].y+int((partnerPoint[i][2].y-partnerPoint[i][0].y)*abs(partnerPoint[i][0].nH)/(abs(partnerPoint[i][0].nH)+abs(partnerPoint[i][2].nH))),goalHeight))
+                print(i,3)
             else:
                 pass
             if partnerPoint[i][1].nH * partnerPoint[i][2].nH <= 0:
                 goalHeightPoint.append(Point(partnerPoint[i][1].x+int((partnerPoint[i][2].x-partnerPoint[i][1].x)*abs(partnerPoint[i][1].nH)/(abs(partnerPoint[i][1].nH)+abs(partnerPoint[i][2].nH))),partnerPoint[i][1].y,goalHeight))
+                print(i,4)
             else:
                 pass
         except:
             pass
-    return goalHeightPoint
+    return goalHeightPoint#有些線段會重複計算導致有同一線段出現許多同點物件，甚至有同一線段因為兩次基準點不同而出現不同的零高點物件
 ###
-goalHeight = int(input('目標高度 : '))
+goalHeight = float(input('目標高度 : '))
 
 print('\n輸入座標點及高程')
 wholeArea = [(0,0,111),(1100,0,100.5),(0,650,105),(1100,650,30.5),(600,275,98),(1100,275,80),(600,650,91),(950,275,80),(950,650,47),(600,0,101)]
