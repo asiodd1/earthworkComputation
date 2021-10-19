@@ -14,10 +14,12 @@ class Line:
             #0=x+b
             self.a = 1
             self.b = -pointA.x
+            print('x=%d'%(-self.b))
         else:
             #y=ax+b
             self.a = (pointA.y-pointB.y)/(pointA.x-pointB.x)
             self.b = (pointA.x*pointB.y-pointB.x*pointA.y)/(pointA.x-pointB.x)
+            print('y={a}x+{b}'.format(a=self.a,b=self.b))
 
 class Area:#每塊矩形設為一個面積物件，以左下點為面積物件位置座標點，
     def __init__(self,pointA,i):
