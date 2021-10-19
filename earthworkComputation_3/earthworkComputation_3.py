@@ -161,13 +161,11 @@ for i in range(len(pointList)):
     partnerPoint[i] = findPartnerPoint(i,pointList)
 
 lineSet=set()
-for i in range(len(lineSet)):
+for i in range(len(pointList)):
     if partnerPoint[i][0] != None:
         lineSet.add((pointList[i],partnerPoint[i][0]))
-        if partnerPoint[i][2] != None:
-            lineSet.add((partnerPoint[i][0],partnerPoint[i][2]))
     if partnerPoint[i][1] != None:
         lineSet.add((pointList[i],partnerPoint[i][1]))
-        if partnerPoint[i][2 != None:
-            lineSet.add((partnerPoint[i][1],partnerPoint[i][2]))
-    print('')
+    if partnerPoint[i][2] != None:
+        lineSet.add((partnerPoint[i][0],partnerPoint[i][2]))
+        lineSet.add((partnerPoint[i][1],partnerPoint[i][2]))
