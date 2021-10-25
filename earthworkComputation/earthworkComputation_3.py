@@ -121,7 +121,7 @@ def findPartnerPoint(i, pointList):#找到相鄰三點，右點、上點、右�
         pass
     return rightSidePoint,upSidePoint,diagonalPoint
 
-def findGoalHeightPoint():
+def findGoalHeightPoint():#以pointList為尋找基準
     goalHeightPoint=[]
     for i in range(len(pointList)):
         try:
@@ -148,6 +148,20 @@ def findGoalHeightPoint():
         except:
             pass
     return goalHeightPoint#有些線段會重複計算導致有同一線段出現許多同點物件，甚至有同一線段因為兩次基準點不同而出現不同的零高點物件
+
+def findZeroPoint(a2):#以lineSet為尋找基準
+    zeroPoint=[]
+    for i in range((len(a2))):
+        try:
+            if a2[i][0].nH * a2[i][1].nH<=0 and a2[i][0].x==a2[i][1].x:
+                zeroPoint.append(Point(a2[i][0].x,a2[i][0].y+int((a2[i][1].y-a2[i][0].y)*abs(a2[i][0].nH)/(abs(a2[i][0].nH)+abs(a2[i][1].nH))),goalHeight))
+            else:
+                pass
+            if a2[i][0].nH * a2[i][1].nH<=0 and a2[i][0].y==a2[i][1].y:
+                zeroPoint.append(Point(a2[i][0].x+int((a2[i][1].x-a2[i][0].x)*abs(a2[i][0].nH)/(abs(a2[i][0].nH)+abs(a2[i][1].nH))),a2[i][0].y,goalHeight))
+        except:
+            pass
+    return zeroPoint
 ###
 goalHeight = float(input('目標高度 : '))
 
@@ -168,6 +182,3 @@ for i in range(len(pointList)):
         lineSet.add((pointList[i],partnerPoint[i][0]))
     if partnerPoint[i][1] != None:
         lineSet.add((pointList[i],partnerPoint[i][1]))
-    if partnerPoint[i][2] != None:
-        lineSet.add((partnerPoint[i][0],partnerPoint[i][2]))
-        lineSet.add((partnerPoint[i][1],partnerPoint[i][2]))
