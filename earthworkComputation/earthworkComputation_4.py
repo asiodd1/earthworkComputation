@@ -166,7 +166,7 @@ def findZeroPoint(a2):#以lineSet為尋找基準
 goalHeight = float(input('目標高度 : '))
 
 print('\n輸入座標點及高程')
-wholeArea = [(0,0,111),(1100,0,100.5),(0,650,105),(1100,650,30.5),(600,275,98),(1100,275,80),(600,650,91),(950,275,80),(950,650,47),(600,0,101)]
+wholeArea = []##[(0,0,111),(1100,0,100.5),(0,650,105),(1100,650,30.5),(600,275,98),(1100,275,80),(600,650,91),(950,275,80),(950,650,47),(600,0,101)]
 n=0
 while n!='ok':
     try:
@@ -196,17 +196,33 @@ for i in range(len(pointList)):
         lineSet.add((pointList[i],partnerPoint[i][1]))
 zeroPoint=findZeroPoint(list(lineSet))
 
+areaList=[]
+for i in range(len(pointList)):
+    areaList.append(Area(pointList[i],i))
+
 while True:
-    mode = int(input('列出座標點資訊:1,尋找目標高程點:2\n'))
-    if mode == 1:
-        for i in pointList:
-            print(i.x,i.y,i.rH,i.nH)
-    elif mode == 2:
-        tempZ = set()
-        for i in zeroPoint:
-            tempZ.add((i.x,i.y))
-        tempZ = list(tempZ)
-        for i in tempZ:
-            print(i)
-    else:
+    try:
+        mode = int(input('列出座標點資訊:1,尋找目標高程點:2,列出方格面積和土方資訊:3\n'))
+        if mode == 1:
+            for i in pointList:
+                print(i.x,i.y,i.rH,i.nH)
+        elif mode == 2:
+            tempZ = set()
+            for i in zeroPoint:
+                tempZ.add((i.x,i.y))
+            tempZ = list(tempZ)
+            for i in tempZ:
+                print(i)
+        elif mode == 3:
+            totalVolume=0
+            for i in areaList:
+                if i.volume != 0:
+                    print(i.Location,end=' ')
+                    print('方格面積:'+str(i.area),end=' ')
+                    print('方格土方:'+str(i.volume),end='\n')
+                totalVolume=totalVolume+i.volume
+            print('總土方:'+str(totalVolume/1000000)+'立方公尺')
+        else:
+            print('重新輸入')
+    except:
         print('重新輸入')
